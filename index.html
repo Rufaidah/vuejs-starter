@@ -35,7 +35,11 @@
 				removeItem(item){
 					const index = this.items.indexOf(item)
 					this.items.splice(index, 1)
+					localStorage.setItem('items', JSON.stringify(this.items))
 				}
+			},
+			created(){
+				this.items = JSON.parse(localStorage.getItem('items')) || []
 			}
 		})
 	</script>
