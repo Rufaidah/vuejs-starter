@@ -8,7 +8,7 @@
 	<div id = "app">
 		<p v-if="items.length == 0">No item</p>
 		<ul>
-			<li v-for="item in items">{{item}} - <a href="#" v-on:click="removeItem(item)">remove</a></li>
+			<li v-for="item in items">{{item.name}} - <a href="#" v-on:click="removeItem(item)">remove</a></li>
 		</ul>
 
 		{{item}} </br>
@@ -18,6 +18,7 @@
 	</div>
 
 	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+	<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 	<script type="text/javascript">
 		new Vue({
 			el: '#app',
@@ -39,7 +40,11 @@
 				}
 			},
 			created(){
-				this.items = JSON.parse(localStorage.getItem('items')) || []
+				axios.get('https://api.github.com/users/isfaaghyth/repos').then((response) => {
+					console.log(response.data)
+					this.items = response.data
+				})
+				// this.items = JSON.parse(localStorage.getItem('items')) || []
 			}
 		})
 	</script>
